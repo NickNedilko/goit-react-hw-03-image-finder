@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { FaBeer } from 'react-icons/fa';
+// import { FaTelegram } from 'react-icons/fa';
 import css from './Searchbar.module.css';
 
 class Searchbar extends Component {
@@ -18,6 +18,7 @@ class Searchbar extends Component {
       search: '',
     });
   };
+
   handleFormSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state.search);
@@ -30,11 +31,9 @@ class Searchbar extends Component {
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleFormSubmit}>
           <button type="submit" className={css.SearchFormButton}>
-            <span className={css.SearchFormButtonLabel}>
-              Search
-              {/* <FaBeer /> */}
-            </span>
+            <span className={css.SearchFormButtonLabel}>Search</span>
           </button>
+          {/* <FaTelegram width="1140" height="1140"  /> */}
 
           <input
             className={css.SearchFormInput}
