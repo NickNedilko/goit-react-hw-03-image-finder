@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 // import { FaTelegram } from 'react-icons/fa';
 import css from './Searchbar.module.css';
 
@@ -21,6 +22,9 @@ class Searchbar extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    if (this.state.search.trim() === '') {
+      return toast.warn('Введите строку поиска');
+    }
     this.props.onSubmit(this.state.search);
     this.resetForm();
   };

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { InfinitySpin } from 'react-loader-spinner';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Api from './services/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
@@ -9,20 +11,20 @@ class App extends Component {
   state = {
     images: [],
     search: null,
-    status: 'edle',
+    status: 'false',
     page: 1,
   };
 
   async componentDidUpdate(_, prevState) {
     try {
       const { search, page } = this.state;
-      this.setState({ status: true });
+      // this.setState({ status: true });
       const images = await Api(page, search);
       const { hits } = images.data;
       if (prevState.search !== search || prevState.page !== page) {
         this.setState({
           images: [...prevState.images, ...hits],
-          status: false,
+          // status: false,
         });
       }
     } catch (error) {
@@ -55,6 +57,7 @@ class App extends Component {
         {status && <InfinitySpin width="200" color="#4fa94d" />}
         <ImageGallery images={this.state.images} />
         {images.length > 0 && <Button onClick={this.LoadMoreBtn} />}
+        <ToastContainer />
       </>
     );
   }
