@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 const Api = async (page, search) => {
-  //   if (search === '') {
-  //     return;
-  //   }
   const images = await axios.get('https://pixabay.com/api/', {
     params: {
       key: '31317963-93e1be27f3dc3526dd5fff289',

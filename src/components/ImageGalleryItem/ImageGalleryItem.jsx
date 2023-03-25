@@ -7,29 +7,19 @@ class ImageGalleryItem extends Component {
     showModal: false,
   };
 
-  closeModal = e => {
-    if (e.code === 'Escape') {
-      console.log(e.code);
-      this.handleOpenModal();
-    }
-    if (e.target === e.currentTarget) {
-      this.closeModal();
-    }
-  };
+  //   componentDidUpdate() {
+  //     const { showModal } = this.state;
+  //     if (showModal) {
+  //       //   window.addEventListener('keydown', this.closeModal);
+  //       window.addEventListener('click', this.closeModal);
+  //     }
+  //     if (!showModal) {
+  //       //   window.removeEventListener('keydown', this.closeModal);
+  //       window.removeEventListener('click', this.closeModal);
+  //     }
+  //   }
 
-  componentDidUpdate() {
-    const { showModal } = this.state;
-    if (showModal) {
-      window.addEventListener('keydown', this.closeModal);
-      window.addEventListener('click', this.closeModal);
-    }
-    if (!showModal) {
-      window.removeEventListener('keydown', this.closeModal);
-      window.removeEventListener('click', this.closeModal);
-    }
-  }
-
-  handleOpenModal = () => {
+  toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal,
     });
@@ -45,10 +35,16 @@ class ImageGalleryItem extends Component {
             className={css.ImageGalleryItemImage}
             src={src}
             alt={alt}
-            onClick={this.handleOpenModal}
+            onClick={this.toggleModal}
           />
         </li>
-        {showModal && <Modal largeImageURL={largeImageURL} alt={alt} />}
+        {showModal && (
+          <Modal
+            largeImageURL={largeImageURL}
+            alt={alt}
+            onModal={this.toggleModal}
+          />
+        )}
       </>
     );
   }

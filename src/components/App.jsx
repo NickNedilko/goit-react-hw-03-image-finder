@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MagnifyingGlass } from 'react-loader-spinner';
+import { InfinitySpin } from 'react-loader-spinner';
 import Api from './services/Api';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
@@ -9,28 +9,29 @@ class App extends Component {
   state = {
     images: [],
     search: null,
-    status: true,
+    status: 'edle',
     page: 1,
   };
 
   async componentDidUpdate(_, prevState) {
     try {
       const { search, page } = this.state;
-      // this.setState({ status: false });
-
+      this.setState({ status: true });
       const images = await Api(page, search);
-
       const { hits } = images.data;
       if (prevState.search !== search || prevState.page !== page) {
         this.setState({
           images: [...prevState.images, ...hits],
-          status: true,
+          status: false,
         });
       }
     } catch (error) {
       console.log(error);
     }
+    // this.setState({ status: false });
   }
+
+  // componentDidUpdate(_, prevState) {}
 
   searchInput = message => {
     console.log(message);
@@ -51,18 +52,7 @@ class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.searchInput} />
-        {!status && (
-          <MagnifyingGlass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="MagnifyingGlass-loading"
-            wrapperStyle={{}}
-            wrapperClass="MagnifyingGlass-wrapper"
-            glassColor="#c0efff"
-            color="#e15b64"
-          />
-        )}
+        {status && <InfinitySpin width="200" color="#4fa94d" />}
         <ImageGallery images={this.state.images} />
         {images.length > 0 && <Button onClick={this.LoadMoreBtn} />}
       </>
