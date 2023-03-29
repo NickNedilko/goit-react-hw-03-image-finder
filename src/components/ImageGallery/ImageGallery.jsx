@@ -7,7 +7,7 @@ import css from './ImageGallery.module.css';
 
 class ImageGallery extends PureComponent {
   state = {
-    images: [],
+    images: null,
     page: 1,
     status: 'edle',
   };
@@ -15,19 +15,27 @@ class ImageGallery extends PureComponent {
   async componentDidUpdate(prevProps, prevState) {
     const { search } = this.props;
     const { page } = this.state;
-    if (prevProps.search !== search) {
-      this.setState({
-        images: null,
-        page: 1,
-        status: 'pending',
-      });
-    }
+
     try {
+      if (prevProps.search !== search) {
+        this.setState({
+          images: null,
+          page: 1,
+        });
+      }
       const images = await Api(page, search);
       const { hits } = images.data;
-      if (prevProps.search !== search || prevState.page !== page) {
+      if (prevProps.search !== search) {
         this.setState({
-          images: [...prevState.images, ...hits],
+          images: [...hits],
+          status: 'resolved',
+        });
+      }
+      if (prevState.page !== page) {
+        const { images } = this.state;
+
+        this.setState({
+          images: [...images, ...hits],
           status: 'resolved',
         });
       }
@@ -66,12 +74,12 @@ class ImageGallery extends PureComponent {
                 />
               );
             })}
-          {status === 'pending' && page > 1 && (
-            <InfinitySpin width="200" color="#4fa94d" />
-          )}
-          {images.length > 0 && <Button onClick={this.LoadMoreBtn} />}
+          <Button onClick={this.LoadMoreBtn} />
         </ul>
       );
+    }
+    if (status === 'pending' && page > 1) {
+      return <InfinitySpin width="200" color="#4fa94d" />;
     }
   }
 }
