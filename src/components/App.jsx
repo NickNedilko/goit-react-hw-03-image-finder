@@ -6,11 +6,10 @@ import Searchbar from './Searchbar/Searchbar';
 
 class App extends Component {
   state = {
-    search: null,
+    search: '',
   };
 
   searchInput = message => {
-    console.log(message);
     this.setState({
       search: message,
     });
@@ -22,7 +21,7 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.searchInput} />
         <ImageGallery search={search} />
-        <ToastContainer />
+        <ToastContainer autoClose={3000} />
       </>
     );
   }

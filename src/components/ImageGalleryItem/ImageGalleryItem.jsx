@@ -26,27 +26,28 @@ class ImageGalleryItem extends Component {
   };
 
   render() {
-    const { id, src, alt, largeImageURL } = this.props;
+    const { webformatURL, tags, largeImageURL } = this.props.item;
     const { showModal } = this.state;
-    return (
-      <>
-        <li key={id} className={css.ImageGalleryItem}>
-          <img
-            className={css.ImageGalleryItemImage}
-            src={src}
-            alt={alt}
-            onClick={this.toggleModal}
-          />
-        </li>
-        {showModal && (
-          <Modal
-            largeImageURL={largeImageURL}
-            alt={alt}
-            onModal={this.toggleModal}
-          />
-        )}
-      </>
-    );
+    if(this.props.item){
+      return (
+        <div>
+            <img
+              className={css.ImageGalleryItemImage}
+              src={webformatURL}
+              alt={tags}
+              onClick={this.toggleModal}
+            />
+          {showModal && (
+            <Modal
+              largeImageURL={largeImageURL}
+              alt={tags}
+              onModal={this.toggleModal}
+            />
+          )}
+        </div>
+      );
+    }
+    
   }
 }
 

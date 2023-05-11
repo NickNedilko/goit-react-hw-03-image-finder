@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Api = async (page, search) => {
+const ApiImages = async (page, search) => {
   const images = await axios.get('https://pixabay.com/api/', {
     params: {
       key: '31317963-93e1be27f3dc3526dd5fff289',
@@ -12,4 +12,4 @@ const Api = async (page, search) => {
 
   return images;
 };
-export default Api;
+export default ApiImages;
