@@ -41,6 +41,7 @@ class ImageGallery extends PureComponent {
       }
     } catch (error) {
       console.log('Ошибка от бекЭнда');
+    } finally {
     }
   }
 
