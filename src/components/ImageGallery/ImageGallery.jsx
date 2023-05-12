@@ -10,6 +10,7 @@ class ImageGallery extends PureComponent {
     images: null,
     page: 1,
     isLoading: false,
+    error: '',
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -19,40 +20,45 @@ class ImageGallery extends PureComponent {
 
     try {
 
-      if(prevProps.search !== search){
-          this.setState({
-          images: null,
-          page: 1,
-          isLoading: true
-        });
-        const images = await ApiImages(page, search);
-      const { hits } = images.data;
-         this.setState({
-          images: hits,
-          isLoading: false,
-        });
-      }
-       if (prevState.page !== page) {
+      if(prevProps.search !== search ){
+        this.setState({
+        images: [],
+        page: 1,
+        isLoading: true
+      });
+      const images = await ApiImages(search);
+    const { hits } = images.data;
+
+    if(page === 1){
+      this.setState({
+        images: hits,
+        isLoading: false,
+      });
+    }
+  
+    }
+    if (prevState.page !== page) {
+    const { search } = this.props;
         const { images } = this.state;
         this.setState({
           isLoading: true,
         })
-        const data = await ApiImages({page, search});
+        const data = await ApiImages(search, page);
         const { hits } = data.data;
         this.setState({
           images: [...images, ...hits],
           isLoading: false
         });
       }
+      
     } catch (error) {
-      console.log('Ошибка от бекЭнда');
-    } finally {
+      this.setState({error: error})
     }
   }
 
   LoadMoreBtn = () => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
+    this.setState(prev => ({
+      page: prev.page + 1,
     }));
   };
 
@@ -62,7 +68,6 @@ class ImageGallery extends PureComponent {
       <>
         <ul className={css.ImageGallery}>
           {images?.length>0 && images?.map(image=>{
-            console.log(image)
             return <li key={image.id}>
               <ImageGalleryItem item={image}/>
             </li>
