@@ -21,7 +21,7 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.searchInput} />
         <ImageGallery search={search} />
-        <ToastContainer autoClose={3000} />
+        <ToastContainer autoClose={1500} />
       </>
     );
   }
