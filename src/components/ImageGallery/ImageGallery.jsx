@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { InfinitySpin } from 'react-loader-spinner';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Button from '../Button/Button';
-import ApiImages from '../services/Api';
+import ApiImages from '../../services/Api';
 import css from './ImageGallery.module.css';
 import { toast } from 'react-toastify';
 
