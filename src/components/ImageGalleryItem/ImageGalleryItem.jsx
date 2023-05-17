@@ -7,18 +7,6 @@ class ImageGalleryItem extends Component {
     showModal: false,
   };
 
-  //   componentDidUpdate() {
-  //     const { showModal } = this.state;
-  //     if (showModal) {
-  //       //   window.addEventListener('keydown', this.closeModal);
-  //       window.addEventListener('click', this.closeModal);
-  //     }
-  //     if (!showModal) {
-  //       //   window.removeEventListener('keydown', this.closeModal);
-  //       window.removeEventListener('click', this.closeModal);
-  //     }
-  //   }
-
   toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal,
@@ -28,15 +16,15 @@ class ImageGalleryItem extends Component {
   render() {
     const { webformatURL, tags, largeImageURL } = this.props.item;
     const { showModal } = this.state;
-    if(this.props.item){
+    if (this.props.item) {
       return (
         <div>
-            <img
-              className={css.ImageGalleryItemImage}
-              src={webformatURL}
-              alt={tags}
-              onClick={this.toggleModal}
-            />
+          <img
+            className={css.ImageGalleryItemImage}
+            src={webformatURL}
+            alt={tags}
+            onClick={this.toggleModal}
+          />
           {showModal && (
             <Modal
               largeImageURL={largeImageURL}
@@ -47,7 +35,6 @@ class ImageGalleryItem extends Component {
         </div>
       );
     }
-    
   }
 }
 
